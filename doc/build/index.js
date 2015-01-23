@@ -1,4 +1,4 @@
-KISSY.add('kg/vc-notifications/1.0.0/index',["./index.css","node","base","event","ua","kg/xtemplate/3.3.3/runtime","./content-box"],function(S ,require, exports, module) {
+KISSY.add('kg/vc-notifications/1.0.2/index',["./index.css","node","base","event","ua","kg/xtemplate/3.3.3/runtime","./content-box"],function(S ,require, exports, module) {
 
 
 
@@ -58,7 +58,7 @@ function isDOMExist(element) {
 
 function autoHide($box){
   var box = $box && $box.getDOMNode();
-  if(box && $box.hasClass('xclose') && !isDOMExist(box))return;
+  if(!box || $box.hasClass('xclose') || !isDOMExist(box))return;
 
   if(transition && box.addEventListener) {
     $box.css({'height': 0, 'opacity': 0});
@@ -80,8 +80,8 @@ function autoHide($box){
 
 
 function autoRightHide($box){
-  if($box.hasClass('xclose'))return;
-  var box = $box.getDOMNode();
+  var box = $box && $box.getDOMNode();
+  if(!box || $box.hasClass('xclose') || !isDOMExist(box))return;
 
   $box.removeClass('show');
   box.addEventListener(transition.end, function(){
@@ -93,8 +93,8 @@ function autoRightHide($box){
 
 
 function autoLeftHide($box){
-  if($box.hasClass('xclose'))return;
-  var box = $box.getDOMNode();
+  var box = $box && $box.getDOMNode();
+  if(!box || $box.hasClass('xclose') || !isDOMExist(box))return;
 
   $box.removeClass('show');
   box.addEventListener(transition.end, function(){
@@ -103,6 +103,22 @@ function autoLeftHide($box){
   }, false);
 
 }
+
+function createNoticeDOM(data){
+  var renderData = {
+    boxCls: data['boxCls'],
+    tPartHtml: data['tPartHtml'],
+    mPartHtml: data['mPartHtml'],
+    bPartHtml: data['bPartHtml'],
+    mPartImg: data['mPartImg'],
+    mPartTitle: data['mPartTitle'],
+    mPartMsg: data['mPartMsg']
+  }
+
+  var instance = new XTemplateRuntime(noticeXtpl);
+  return Node.one(instance.render(renderData));
+}
+
 
 var VcNotifications = Base.extend({
     initializer:function(){
@@ -202,13 +218,6 @@ var VcNotifications = Base.extend({
         mPartMsg: data['mPartMsg']
       }
 
-      var instance = new XTemplateRuntime(noticeXtpl);
-      if(key){
-        this[key] = Node.one(instance.render(renderData));
-      }else{
-        this.$notice = Node.one(instance.render(renderData));
-      }
-
     },
 
 
@@ -216,56 +225,56 @@ var VcNotifications = Base.extend({
       var $noticeClone, self = this;
 
       if(key){
-        $noticeClone = this[key].clone(true);
+        $noticeClone = Node.one(param);
       }else{
-        $noticeClone = this.$notice.clone(true);
-      }
+        if(param){
+          if(S.isString(param)){
+            $noticeClone = createNoticeDOM({mPartMsg: param});
+          }else if(S.isObject(param)){
+            $noticeClone = createNoticeDOM(param);
+            if('mPartImg' in param){
+              $noticeClone.one('.vc-img') && $noticeClone.one('.vc-img').attr("src", param['mPartImg']);
+            }
+            if('mPartTitle' in param){
+              $noticeClone.one('.title') && $noticeClone.one('.title').text(param['mPartTitle']);
+            }
+            if('mPartMsg' in param){
+              $noticeClone.one('.msg') && $noticeClone.one('.msg').text(param['mPartMsg']);
+            }
 
+            if('boxCls' in param){
+              $noticeClone.attr('class', 'vc-notify-box '+ param['boxCls']);
+            }
 
-      if(param){
-        if(S.isString(param)){
-          $noticeClone.one('.msg').text(param);
-        }else if(S.isObject(param)){
-          if('boxCls' in param){
-            $noticeClone.attr('class', 'vc-notify-box '+ param['boxCls']);
           }
-          if('mPartImg' in param){
-            $noticeClone.one('.vc-img') && $noticeClone.one('.vc-img').attr("src", param['mPartImg']);
-          }
-          if('mPartTitle' in param){
-            $noticeClone.one('.title') && $noticeClone.one('.title').text(param['mPartTitle']);
-          }
-          if('mPartMsg' in param){
-            $noticeClone.one('.msg') && $noticeClone.one('.msg').text(param['mPartMsg']);
-          }
-
         }
-
       }
 
-      if(this.boxs.length === 0 ){
+
+
+
+      this.boxs.push($noticeClone);
+
+      if(this.boxs.length === 1 ){
         this.$container.css('display', 'block');
 
         this.taskId = setInterval(function(){
-          if(self.boxs.length !== 0){
-            setTimeout(function(){
-              if(self.boxs.length === 0)return;
-              var $box = self.boxs.shift();
-              if(self.boxEffect === 'rs'){
-                autoRightHide($box)
-              }else if(self.boxEffect === 'ls'){
-                autoLeftHide($box)
-              }else{
-                autoHide($box);
-              }
-
-            }, self.stayTime);
-          }
-
           if(self.$container.all('.vc-notify-box').length === 0){
             clearInterval(self.taskId);
             self.$container.removeAttr('style');
           }
+
+          var $box = self.boxs.shift();
+          setTimeout(function(){
+            if(self.boxEffect === 'rs'){
+              autoRightHide($box);
+            }else if(self.boxEffect === 'ls'){
+              autoLeftHide($box);
+            }else{
+              autoHide($box);
+            }
+
+          }, self.stayTime);
 
         }, self.gapTime);
       }
@@ -297,7 +306,7 @@ var VcNotifications = Base.extend({
 
 
 
-      this.boxs.push($noticeClone);
+
     }
 
 

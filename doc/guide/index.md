@@ -1,6 +1,6 @@
 ## 综述
 
-版本1.0.0
+版本1.0.2
 
 vc-notifications组件的制作思路是满足大众化普遍的需求力求使用简单；
 
@@ -9,6 +9,8 @@ vc-notifications组件分为两个部分，notice容器和notice；你可以设�
 一条notice可以有3种形式：1、只有内容 2、有标题和内容 3、有标题、内容和图片；你也可以定制你的notice形式， 组件提供了相应的支持；
 
 vc-notifications组件pc上支持到ie8+, 对于ie7-浏览器没测试， 未知支持情况。
+
+注： 如果你的notice中有图片，请预加载你的图片，优化体验； 当然这不是必须的。
 
 欢迎大家反馈，对于特殊应用场景有提供了方式去扩展， 如果给你带来不便，非常抱歉，希望您能反馈并指教。
 
@@ -51,14 +53,12 @@ S.use('kg/vc-notifications/1.0.0/index', function (S, VCNotifications) {
 
 ### notifications对象实例上的方法：
 * notify(param, key)：
-    * contentHtml：非必填参数，可以是字符串或者object， 如果是字符串会认为这个notice只有内容会就值放置在.msg中;
-如果是object, 这个对象将中可以有boxCls、mPartImg、mPartTitle、mPartMsg， 这些参数的含义见以上关于属性的说明；
-	  * key：非必填参数， 如果不填就采用创建notifications对象时候的时候创建的模板； 模板的意思是这样： 一个notifications中notice可以有多种形式
-一种形式对应一种key， 在创建notifications对象实例之前，会有一个默认形式，这个默认形式没key对应，当你调用notify无key的时候就用默认的模板;关于创建模板请看下一个api介绍；
+    * contentHtml：必填参数，可以是字符串或者object， 如果是字符串会认为这个notice只有内容会就值放置在.msg中;
+如果是object, 这个对象将中可以有boxCls、mPartImg、mPartTitle、mPartMsg， 这些参数的含义见以上关于属性的说明; 
+你还可以自己制作的notice结点，你的notice结点的根节点请加入class：vc-notify-box，这时候key=true；
+	  * key：非必填参数， 如果你自己制作notice结点，请设置key为true。；
 
-* createNoticeDom(data, key)：
-    * data：必填参数，一个object，其属性有boxCls、tPartHtml、mPartHtml、bPartHtml、mPartImg、mPartTitle、mPartMsg；这些参数的含义见以上关于属性的说明；
-    * key: 必填参数，你再notify中就要用到你在这里创建的key；
+
 
 
 

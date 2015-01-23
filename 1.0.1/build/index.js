@@ -1,4 +1,4 @@
-KISSY.add('kg/vc-notifications/1.0.2/index',["./index.css","node","base","event","ua","kg/xtemplate/3.3.3/runtime","./content-box"],function(S ,require, exports, module) {
+KISSY.add('kg/vc-notifications/1.0.0/index',["./index.css","node","base","event","ua","kg/xtemplate/3.3.3/runtime","./content-box"],function(S ,require, exports, module) {
 
 
 
@@ -106,7 +106,6 @@ function autoLeftHide($box){
 
 function createNoticeDOM(data){
   var renderData = {
-    boxCls: data['boxCls'],
     tPartHtml: data['tPartHtml'],
     mPartHtml: data['mPartHtml'],
     bPartHtml: data['bPartHtml'],
@@ -225,7 +224,7 @@ var VcNotifications = Base.extend({
       var $noticeClone, self = this;
 
       if(key){
-        $noticeClone = Node.one(param);
+        $noticeClone = param;
       }else{
         if(param){
           if(S.isString(param)){

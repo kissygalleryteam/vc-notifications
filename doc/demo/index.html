@@ -13,8 +13,6 @@
   <button id="btn">简单用法</button>
   <button id="btn2">box有标题和内容</button>
   <button id="btn3">box有图片、标题和内容</button>
-  <button id="btn4">box有图片、标题和内容：修改内容</button>
-  <button id="btn5">box有图片、标题和内容：修改标题和内容</button>
   <button id="btn6">修改box的背景</button>
 </div>
 
@@ -35,7 +33,7 @@
         S.config({
             packages:[
                 {
-                    name:"kg/vc-notifications/1.0.0",
+                    name:"kg/vc-notifications/1.0.2",
                     path:debugPath,
                     charset:"utf-8"
                 }
@@ -43,7 +41,7 @@
         });
     }
 
-    S.use('kg/vc-notifications/1.0.0/index, node', function (S, VcNotifications, Node) {
+    S.use('kg/vc-notifications/1.0.2/index, node', function (S, VcNotifications, Node) {
       /**
        * 第一组使用情况
        * @type {VcNotifications}
@@ -55,37 +53,22 @@
         vcNotify.notify('该项内容用于法院支付宝认证，请填写未过期的、正确的信息');
       });
 
-      //有标题和内容
-      vcNotify.createNoticeDom({
-        mPartTitle: "公告",
-        mPartMsg: "该项内容用于法院支付宝认证，请填写未过期的、正确的信息"
-      }, 'title_content');
       Node.one('#btn2').on('click', function(){
-        vcNotify.notify(null, 'title_content');
+        vcNotify.notify({mPartTitle: "公告",mPartMsg: "该项内容用于法院支付宝认证，请填写未过期的、正确的信息"});
       });
-
-      //有图片、标题和内容
-      vcNotify.createNoticeDom({
-        boxCls: 'success',
-        mPartImg: 'http://img.f2e.taobao.net/img.png?x=48x48.jpg',
-        mPartTitle: "公告",
-        mPartMsg: "该项内容用于法院支付宝认证，请填写未过期的、正确的信息"
-      }, 'img_title_content');
 
       Node.one('#btn3').on('click', function(){
-        vcNotify.notify(null, 'img_title_content');
+        vcNotify.notify({
+          boxCls: 'success',
+          mPartImg: 'http://img.f2e.taobao.net/img.png?x=48x48.jpg',
+          mPartTitle: "公告",
+          mPartMsg: "该项内容用于法院支付宝认证，请填写未过期的、正确的信息"
+        });
       });
 
-      Node.one('#btn4').on('click', function(){
-        vcNotify.notify('btn4 test', 'img_title_content');
-      });
-
-      Node.one('#btn5').on('click', function(){
-        vcNotify.notify({mPartTitle:'notice', mPartMsg: 'btn5 test'}, 'img_title_content');
-      });
 
       Node.one('#btn6').on('click', function(){
-        vcNotify.notify({boxCls:'warning'},'title_content');
+        vcNotify.notify({boxCls:'warning',mPartTitle: "公告",mPartMsg: "该项内容用于法院支付宝认证，请填写未过期的、正确的信息"});
       });
 
 

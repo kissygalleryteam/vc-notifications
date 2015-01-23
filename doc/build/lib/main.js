@@ -1,4 +1,4 @@
-KISSY.add('kg/vc-notifications/1.0.0/lib/main',["node","base"],function(S ,require, exports, module) {
+KISSY.add('kg/vc-notifications/1.0.2/lib/main',["node","base"],function(S ,require, exports, module) {
 
 
 

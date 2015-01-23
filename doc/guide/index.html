@@ -25,16 +25,17 @@
           <p class="author-wrapper"><span>组件有问题？旺旺联系作者：</span><a href="https://github.com/kago54" target="_blank" data-name="粟一" class="author"><img src="https://avatars.githubusercontent.com/u/3114772?v=3&amp;s=60" alt="粟一"></a><span class="author-name">粟一</span>
           </p>
           <div class="common-link"><a href="../demo/index.html" target="_blank" class="demo">示例</a><a href="https://github.com/kissygalleryteam/vc-notifications" target="_blank" class="source">源码</a></div>
-          <p class="com-info"><span class="info-label">View</span><span data-com="vc-notifications" class="J_View">1</span></p>
+          <p class="com-info"><span class="info-label">View</span><span data-com="vc-notifications" class="J_View">37</span></p>
           <p class="com-info"><span class="info-label">所属分类</span><a href="http://kpm.taobao.net/list/UI">UI</a><span class="info-label tag-label">组件标签</span><a href="http://kpm.taobao.net/list/tag?tag=notification">notification</a><a href="http://kpm.taobao.net/list/tag?tag=UI">UI</a><a href="http://kpm.taobao.net/list/tag?tag=通知">通知</a>
           </p>
           <p class="com-info"><span class="info-label">kissy版本</span><span>1.4.X</span>
           </p><h2 id="-">综述</h2>
-<p>版本1.0.0</p>
+<p>版本1.0.2</p>
 <p>vc-notifications组件的制作思路是满足大众化普遍的需求力求使用简单；</p>
 <p>vc-notifications组件分为两个部分，notice容器和notice；你可以设置notice容器的宽度来定义每条notice的宽度，高度是auto；</p>
 <p>一条notice可以有3种形式：1、只有内容 2、有标题和内容 3、有标题、内容和图片；你也可以定制你的notice形式， 组件提供了相应的支持；</p>
 <p>vc-notifications组件pc上支持到ie8+, 对于ie7-浏览器没测试， 未知支持情况。</p>
+<p>注： 如果你的notice中有图片，请预加载你的图片，优化体验； 当然这不是必须的。</p>
 <p>欢迎大家反馈，对于特殊应用场景有提供了方式去扩展， 如果给你带来不便，非常抱歉，希望您能反馈并指教。</p>
 <h2 id="-">初始化组件</h2>
 <pre><code class="lang-javascript">S.use(&#39;kg/vc-notifications/1.0.0/index&#39;, function (S, VCNotifications) {
@@ -69,20 +70,13 @@
 </ul>
 <h3 id="notifications-">notifications对象实例上的方法：</h3>
 <ul>
-<li><p>notify(param, key)：</p>
-<ul>
-<li>contentHtml：非必填参数，可以是字符串或者object， 如果是字符串会认为这个notice只有内容会就值放置在.msg中;
-如果是object, 这个对象将中可以有boxCls、mPartImg、mPartTitle、mPartMsg， 这些参数的含义见以上关于属性的说明；<ul>
-<li>key：非必填参数， 如果不填就采用创建notifications对象时候的时候创建的模板； 模板的意思是这样： 一个notifications中notice可以有多种形式
-一种形式对应一种key， 在创建notifications对象实例之前，会有一个默认形式，这个默认形式没key对应，当你调用notify无key的时候就用默认的模板;关于创建模板请看下一个api介绍；</li>
+<li>notify(param, key)：<ul>
+<li>contentHtml：必填参数，可以是字符串或者object， 如果是字符串会认为这个notice只有内容会就值放置在.msg中;
+如果是object, 这个对象将中可以有boxCls、mPartImg、mPartTitle、mPartMsg， 这些参数的含义见以上关于属性的说明; 
+你还可以自己制作的notice结点，你的notice结点的根节点请加入class：vc-notify-box，这时候key=true；<ul>
+<li>key：非必填参数， 如果你自己制作notice结点，请设置key为true。；</li>
 </ul>
 </li>
-</ul>
-</li>
-<li><p>createNoticeDom(data, key)：</p>
-<ul>
-<li>data：必填参数，一个object，其属性有boxCls、tPartHtml、mPartHtml、bPartHtml、mPartImg、mPartTitle、mPartMsg；这些参数的含义见以上关于属性的说明；</li>
-<li>key: 必填参数，你再notify中就要用到你在这里创建的key；</li>
 </ul>
 </li>
 </ul>

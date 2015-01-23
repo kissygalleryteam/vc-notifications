@@ -1,4 +1,4 @@
-KISSY.add('kg/vc-notifications/1.0.2/content-box',[],function(S ,require, exports, module) {
+KISSY.add('kg/vc-notifications/1.0.0/content-box',[],function(S ,require, exports, module) {
 
 
 var ret = module.exports = function contentBox(undefined){

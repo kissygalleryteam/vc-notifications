@@ -1,4 +1,4 @@
-KISSY.add('kg/vc-notifications/1.0.2/content-box-render',["./content-box","kg/xtemplate/3.3.3/runtime"],function(S ,require, exports, module) {
+KISSY.add('kg/vc-notifications/1.0.0/content-box-render',["./content-box","kg/xtemplate/3.3.3/runtime"],function(S ,require, exports, module) {
 
 
 var tpl = require("./content-box");
