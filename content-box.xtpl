@@ -1,4 +1,4 @@
-<div class="vc-notify-box{{' ' + boxCls}}">
+<div class="vc-notify-box{{#if(boxCls)}}' '+ boxCls{{/if}}">
     <div class="box-wrap">
         <div class="top-part">{{{tPartHtml}}}</div>
         <div class="main-part">

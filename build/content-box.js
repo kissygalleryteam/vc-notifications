@@ -1,4 +1,4 @@
-KISSY.add('kg/vc-notifications/1.0.0/content-box',[],function(S ,require, exports, module) {
+KISSY.add('kg/vc-notifications/1.0.2/content-box',[],function(S ,require, exports, module) {
 
 
 var ret = module.exports = function contentBox(undefined){
@@ -39,6 +39,12 @@ var extendCommand = nativeCommands["extend"];
 var blockCommand = nativeCommands["block"];
 var macroCommand = nativeCommands["macro"];
 var debuggerCommand = nativeCommands["debugger"];
+function func0(scope, buffer, undefined) {
+var data = scope.data;
+var affix = scope.affix;
+buffer.data += '\' \'+ boxCls';
+return buffer;
+}
 function func3(scope, buffer, undefined) {
 var data = scope.data;
 var affix = scope.affix;
@@ -92,10 +98,8 @@ return buffer;
 
 
 buffer.data += '<div class="vc-notify-box';
-var exp1 = ' ';
-var id0 = ((t=(affix.boxCls)) !== undefined ? t:((t = data.boxCls) !== undefined ? t :scope.resolveLooseUp(["boxCls"])));
-exp1 = (' ')+(id0);
-buffer = buffer.writeEscaped(exp1);
+var id1 = ((t=(affix.boxCls)) !== undefined ? t:((t = data.boxCls) !== undefined ? t :scope.resolveLooseUp(["boxCls"])));
+buffer = ifCommand.call(tpl, scope, {params:[id1],fn: func0}, buffer);
 buffer.data += '">\n    <div class="box-wrap">\n        <div class="top-part">';
 pos.line = 3;
 var id2 = ((t=(affix.tPartHtml)) !== undefined ? t:((t = data.tPartHtml) !== undefined ? t :scope.resolveLooseUp(["tPartHtml"])));
